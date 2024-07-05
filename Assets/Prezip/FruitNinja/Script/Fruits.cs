@@ -6,15 +6,17 @@ public class Fruits : MonoBehaviour
 {
     public GameObject slicedFruit;
     public GameObject fruitJuice;
+    private float rotationForce = 200;
+    private Rigidbody rb;
 
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        
+        transform.Rotate(Vector2.right * Time.deltaTime * rotationForce);
     }
 
     private void InstantiateSlicedFruit()
@@ -27,6 +29,7 @@ public class Fruits : MonoBehaviour
         foreach(Rigidbody srb in slicedRb)
         {
             srb.AddExplosionForce(130f, transform.position, 10);
+            srb.velocity = rb.velocity * 1.2f;
         }
 
         Destroy(instantiatedFruit, 5);
