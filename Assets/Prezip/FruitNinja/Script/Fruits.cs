@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class Fruits : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject slicedFruit;
+    public GameObject fruitJuice;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void InstantiateSlicedFruit()
+    {
+        GameObject instantiatedFruit = Instantiate(slicedFruit, transform.position, transform.rotation);
+        GameObject instantiatedJuice =Instantiate(fruitJuice, new Vector3(transform.position.x, transform.position.y, 0), fruitJuice.transform.rotation);
+
+        Rigidbody[] slicedRb = instantiatedFruit.transform.GetComponentsInChildren<Rigidbody>();
+
+        foreach(Rigidbody srb in slicedRb)
+        {
+            srb.AddExplosionForce(130f, transform.position, 10);
+        }
+
+        Destroy(instantiatedFruit, 5);
+        Destroy(instantiatedJuice, 5);
+    }
+
+    private void OnMouseDown()
+    {
+        InstantiateSlicedFruit();
+        Destroy(gameObject);
     }
 }
