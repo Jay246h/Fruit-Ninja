@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class GameManager : MonoBehaviour
     int lives;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI gameOverText;
+    public Button restartButton;
+    public bool gameIsOver;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +29,27 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLives()
     {
-        lives--;
-        livesText.text = "Live : " + lives;
+        if(gameIsOver == false)
+        {
+            lives--;
+            livesText.text = "Live : " + lives;
+
+            if (lives == 0)
+            {
+                GameOver();
+            }
+        }
+    }
+
+    public void GameOver()
+    {
+        gameIsOver = true;
+        gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+    }
+
+    public void RestartTheGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
