@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Fruits : MonoBehaviour
 {
+    private GameManager gm;
     public GameObject slicedFruit;
     public GameObject fruitJuice;
     private float rotationForce = 200;
     private Rigidbody rb;
+    public int scorePoints;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gm = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -40,6 +43,7 @@ public class Fruits : MonoBehaviour
     {
         if(other.tag == "Blade")
         {
+            gm.UpdateTheScore(scorePoints);
             Destroy(gameObject);
             InstantiateSlicedFruit();
         }
